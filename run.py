@@ -7,6 +7,13 @@ import cv2
 import matplotlib.pyplot as plt
 import time
 import keras
+import io
+import random
+from flask import Response
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
+
+p = [0,0]
 
 app = Flask(__name__)
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG"]
@@ -70,24 +77,6 @@ def jinja():
         my_remote=my_remote, repeat=repeat, my_html=my_html
     )
 
-@app.route("/result", methods = ['POST', 'GET'])
-def sign_up():
-    if request.method == 'POST':
-        req = request.form
-        
-        missing = list()
-
-        for k, v in req.items():
-            if v == '':
-                missing.append(k)
-        
-        if missing:
-            feedback = f"Missing fields for {', '.join(missing)}"
-            return render_template("result.html", feedback=feedback)
-
-        return redirect(request.url)
-    return render_template("result.html")
-
 @app.route('/diagnosis', methods = ['POST', 'GET'])
 def upload_image():
     if request.method == 'POST':
@@ -102,17 +91,43 @@ def upload_image():
                 #Image preprocessing and classification
                 test_img = process_img(image, 150, 32)
                 prediction = new_model.predict(test_img)[0][0]
+                prob = 100*round(prediction, 3)
                 classes = ['Normal', 'Pneumonia']
                 pred_class = classes[int(round(prediction))]
 
-                print("CLASS >>>> {}".format(pred_class))
+                global p 
+                p = [100 - prob, prob]
 
-                return render_template('result.html', classification = pred_class , image = image)
+                return render_template('result.html', classification = pred_class, probability = prob)
             else:
                 feedback = "File format not allowed."
                 return render_template("diagnosis.html", feedback=feedback)
                     
     return render_template('diagnosis.html')
+
+@app.route('/plot.png')
+def plot_png():
+    fig = create_figure()
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
+
+def create_figure():
+
+    fontsize= 12
+    plt.rcParams['font.size'] = fontsize
+    cols = ['#66b3ff', '#ff9999']
+
+    fig = plt.Figure(figsize = (3.5,3.5))
+    axis = fig.add_subplot(1, 1, 1)
+    axis.pie(p, autopct='%.1f%%', colors= cols)
+    fig.legend(labels=['Normal', 'Pneumonia'])
+
+    circle = plt.Circle(xy=(0, 0), radius=0.7, facecolor='white')
+    fig.gca().add_artist(circle)
+
+    return fig
+
 
 if __name__ == '__main__':
     app.run()

@@ -25,3 +25,8 @@ body {
 #img-upload{
     width: 100%;
 }
+
+img {
+    max-height: auto;
+    width: 50%;
+  }

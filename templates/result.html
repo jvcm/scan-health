@@ -9,7 +9,18 @@
     <div class="col">
       <h1>Result</h1>
       <hr>
-
+      {% if classification %}
+      <div>
+        <p>Classification: <b>{{ classification }}</b></p>
+        <p>Probability of Normality: {{ (100 - probability)|round(3) }}%</p>
+        <p>Probability of Pneumonia: {{ probability|round(3) }}%</p>
+        <br>
+        <img src="/plot.png" class="img-fluid" alt="Responsive image">
+      </div>
+      <hr>
+      {% else %}
+      <p>Try to upload image first.</p>
+      {% endif %}
     </div>
   </div>
 </div>

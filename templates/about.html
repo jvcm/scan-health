@@ -5,9 +5,44 @@
 {% block main %}
 
 <div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>About</h1>
+      <hr>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div>
+        <br>
+        <ul>
+        <li><p>ScanHealth is a web application that offers free diagnosis of pneumonia. 
+          The client only needs to upload an x-ray photo of the chest region and wait a few moments for the diagnosis. No need to worry, ScanHealth will analyze the x-ray with discretion and guarantee the patient's anonymity.
+          The service has no payment fees. Examples of x-ray images are shown below and illustrate both normal and pneumonia affected lungs. </p>
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <img src="./static/img/xray.png" class="w-100" alt="Responsive image">
+            </div>
+          </div>
+        </div>
+        </li>
+        <br>
+        <li><p>It is difficult for an ordinary person to identify the lung of a patient with pneumonia. ScanHealth has an advanced Artificial Intelligence technology that can accurately detect pneumonia patterns in x-ray exams. The algorithm takes only a few seconds to run and classify the patient's clinical condition, safely and privately.
+          The dataset used in the project was extracted from <a href="https://data.mendeley.com/datasets/rscbjbr9sj/2">this website</a> and consists of x-ray images of patients diagnosed with or without pneumonia.
+          Among patients who were diagnosed with pneumonia, the predictive model was able to correctly diagnose 90% of patients (recall).</p></li>
+        <br>
+        <li><p>The web application was developed as part of the challenge proposed by Pickcells® for the Data Science + Back-end vacancy.</p></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="container">
     <div class="row">
         <div class="col">
-            <h1>Jinja</h1>
+            <h1>About</h1>
             <hr>
 
             <h4>Accessing an object's value.</h4>
@@ -90,6 +125,6 @@
 
         </div>
     </div>
-</div>
+</div> -->
 
 {% endblock %}
