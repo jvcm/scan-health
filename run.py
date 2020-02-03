@@ -7,17 +7,8 @@ import cv2
 import matplotlib.pyplot as plt
 import time
 import keras
-# import keras.backend as K
-# from keras.models import Model, Sequential
-# from keras.layers import Input, Dense, Flatten, Dropout, BatchNormalization
-# from keras.layers import Conv2D, SeparableConv2D, MaxPool2D, LeakyReLU, Activation
-# from keras.optimizers import Adam
-# from keras.preprocessing.image import ImageDataGenerator
-# from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
-# import tensorflow as tf
 
 app = Flask(__name__)
-app.config["IMAGE_UPLOADS"] = "./static/img/uploads/"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG"]
 
 
@@ -104,12 +95,9 @@ def upload_image():
             image = request.files['imgInp']
 
             if allow_image(image.filename, app.config["ALLOWED_IMAGE_EXTENSIONS"]):
-                filename = secure_filename(image.filename)
-                # image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
 
                 #Load CNN model
                 new_model = keras.models.load_model('./model/model.h5')
-                # img_path = './static/img/uploads/' + os.listdir('./static/img/uploads/')[0]
 
                 #Image preprocessing and classification
                 test_img = process_img(image, 150, 32)
