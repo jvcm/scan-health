@@ -7,14 +7,14 @@ import cv2
 import matplotlib.pyplot as plt
 import time
 import keras
-import keras.backend as K
-from keras.models import Model, Sequential
-from keras.layers import Input, Dense, Flatten, Dropout, BatchNormalization
-from keras.layers import Conv2D, SeparableConv2D, MaxPool2D, LeakyReLU, Activation
-from keras.optimizers import Adam
-from keras.preprocessing.image import ImageDataGenerator
-from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
-import tensorflow as tf
+# import keras.backend as K
+# from keras.models import Model, Sequential
+# from keras.layers import Input, Dense, Flatten, Dropout, BatchNormalization
+# from keras.layers import Conv2D, SeparableConv2D, MaxPool2D, LeakyReLU, Activation
+# from keras.optimizers import Adam
+# from keras.preprocessing.image import ImageDataGenerator
+# from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
+# import tensorflow as tf
 
 app = Flask(__name__)
 app.config["IMAGE_UPLOADS"] = "./static/img/uploads/"
@@ -105,10 +105,10 @@ def upload_image():
 
             if allow_image(image.filename, app.config["ALLOWED_IMAGE_EXTENSIONS"]):
                 filename = secure_filename(image.filename)
-                image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
+                # image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
                 print("{} saved".format(filename))
 
-                new_model = keras.models.load_model('model.h5')
+                new_model = keras.models.load_model('./model/model.h5')
                 img_path = './static/img/uploads/' + os.listdir('./static/img/uploads/')[0]
                 test_img = process_img(img_path, 150, 32)
                 prediction = new_model.predict(test_img)[0][0]
