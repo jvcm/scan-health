@@ -101,26 +101,29 @@ def sign_up():
 def upload_image():
     if request.method == 'POST':
         if request.files:
-            image = request.files['image']
+            image = request.files['imgInp']
 
             if allow_image(image.filename, app.config["ALLOWED_IMAGE_EXTENSIONS"]):
                 filename = secure_filename(image.filename)
                 # image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
-                print("{} saved".format(filename))
 
+                #Load CNN model
                 new_model = keras.models.load_model('./model/model.h5')
-                img_path = './static/img/uploads/' + os.listdir('./static/img/uploads/')[0]
-                test_img = process_img(img_path, 150, 32)
-                prediction = new_model.predict(test_img)[0][0]
-                print("CLASS >>>> {}".format(str(prediction)))
+                # img_path = './static/img/uploads/' + os.listdir('./static/img/uploads/')[0]
 
-                return render_template('diagnosis.html', label = filename ,filename = app.config["IMAGE_UPLOADS"] + filename)
+                #Image preprocessing and classification
+                test_img = process_img(image, 150, 32)
+                prediction = new_model.predict(test_img)[0][0]
+                classes = ['Normal', 'Pneumonia']
+                pred_class = classes[int(round(prediction))]
+
+                print("CLASS >>>> {}".format(pred_class))
+
+                return render_template('result.html', classification = pred_class , image = image)
             else:
                 feedback = "File format not allowed."
                 return render_template("diagnosis.html", feedback=feedback)
-            
-            return redirect(request.url)
-        
+                    
     return render_template('diagnosis.html')
 
 if __name__ == '__main__':
