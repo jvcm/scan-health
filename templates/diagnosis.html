@@ -1,0 +1,56 @@
+{% extends "public_template.html" %}
+
+{% block title %}Upload{% endblock %}
+
+{% block main %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+
+        <h1>Select an image</h1>
+        <hr>
+
+        <form action="/diagnosis" method="POST" enctype="multipart/form-data">
+
+            <div class="input-group mb-3">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="image" name="image"/>
+                    <label class="custom-file-label" for="image">Choose file</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload</button>
+            {% if feedback %}
+            <p class="text-danger float-right">{{ feedback }}</p>
+            {% endif %}
+
+        </form>
+
+        {% if filename %}
+        <form action="/result" method="POST" enctype="multipart/form-data">
+            <br>
+            <h1>Uploaded image</h1>
+            <hr>
+            <div class="form-group">
+                <img src="{{ filename }}" class="img-fluid" alt="Responsive image">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Analyse</button>
+
+        </form>
+        {% endif %}
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#image').on('change',function(){
+        //get the file name
+        var fileNameChange = $(this).val();
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileNameChange);
+    })
+</script>
+
+{% endblock %}
