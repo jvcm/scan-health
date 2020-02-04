@@ -15,7 +15,6 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 
 RUN apt-get install -y libsm6 libxext6 libxrender-dev
-RUN pip install opencv-python
 
 ENTRYPOINT [ "python3" ]
 

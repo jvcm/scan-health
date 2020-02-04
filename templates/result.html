@@ -10,12 +10,18 @@
       <h1>Result</h1>
       <hr>
       {% if classification %}
-      <div>
-        <p>Classification: <b>{{ classification }}</b></p>
-        <p>Probability of Normality: {{ (100 - probability)|round(3) }}%</p>
-        <p>Probability of Pneumonia: {{ probability|round(3) }}%</p>
-        <br>
-        <img src="/plot.png" class="img-fluid" alt="Responsive image">
+
+      <div class="container">
+        <div class="row">
+          <div class="col-sm my-auto">
+            <p>Classification: <b>{{ classification }}</b></p>
+            <p>Probability of Normality: {{ (100 - probability)|round(3) }}%</p>
+            <p>Probability of Pneumonia: {{ probability|round(3) }}%</p>
+          </div>
+          <div class="col-sm my-auto">
+            <img src="/plot.png" class="img-fluid" alt="Responsive image">
+          </div>
+        </div>
       </div>
       <hr>
       {% else %}
@@ -23,6 +29,43 @@
       {% endif %}
     </div>
   </div>
+  {% if probability > 50 %}
+  <div class="row">
+    <div class="col">
+      <h1>Recommendations</h1>
+      <hr>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm my-auto">
+            <p>Pneumonia is curable and when the treatment is done correctly, some complications can be avoided. Here are some recommendations if you have been diagnosed with pneumonia:</p>
+            <ul>
+              <li>
+                <p>Blood tests: Blood tests are used to confirm an infection and to try to identify the type of organism that causes the infection (virus or bacteria). However, accurate identification is not always possible.</p>
+              </li>
+              <li> 
+                <p>Hospitalization for pneumonia may be necessary when the person is elderly, has a high fever or has clinical changes resulting from the pneumonia itself. 
+                  A young, healthy person usually responds better to treatment, returning to normal activities in a week.</p>
+              </li>
+              <li>
+                <p>Get plenty of rest.</p>
+              </li>
+              <li>
+                <p>Follow your treatment plan as your doctor advises.</p>
+              </li>
+              <li>
+                <p>Take all medications as your doctor prescribes. If you are using antibiotics, continue to take the medicine until everything is gone. You may start to feel better before you finish your medicine, but you should continue to take it. If you stop too soon, the bacterial infection and your pneumonia can come back.</p>
+              </li>
+              <li>
+                <p>Ask your doctor when to schedule follow-up care. Your doctor may recommend further tests to make sure the infection has cleared up.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+  {% endif %}
 </div>
 
 {% endblock %}
