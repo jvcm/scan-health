@@ -19,6 +19,8 @@ def process_img(img_path, img_dims, batch_size):
     test_data = []
 
     img = plt.imread(img_path)
+    if len(img.shape) > 2:
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     img = cv2.resize(img, (img_dims, img_dims))
     img = np.dstack([img, img, img])
     img = img.astype('float32') / 255

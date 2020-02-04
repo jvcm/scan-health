@@ -1,16 +1,15 @@
 {% extends "public_template.html" %}
 
-{% block title %}About{% endblock %}
-
 {% block main %}
-
+<br>
+<br>
 <div class="container">
   <div class="row">
     <div class="col">
       <h1>About</h1>
       <hr>
       <ul>
-      <li><p>ScanHealth is a web application that offers free diagnosis of pneumonia. 
+      <li><p class="text-justify">ScanHealth is a web application that offers free diagnosis of pneumonia. 
         The client only needs to upload an x-ray photo of the chest region and wait a few moments for the diagnosis. No need to worry, ScanHealth will analyze the x-ray with discretion and guarantee the patient's anonymity.
         The service has no payment fees. Examples of x-ray images are shown below and illustrate both normal and pneumonia affected lungs. </p>
       <div class="container">
@@ -22,102 +21,14 @@
       </div>
       </li>
       <br>
-      <li><p>It is difficult for an ordinary person to identify the lung of a patient with pneumonia. ScanHealth has an advanced Artificial Intelligence technology that can accurately detect pneumonia patterns in x-ray exams. The algorithm takes only a few seconds to run and classify the patient's clinical condition, safely and privately.
+      <li><p class="text-justify">It is difficult for an ordinary person to identify the lung of a patient with pneumonia. ScanHealth has an advanced Artificial Intelligence technology that can accurately detect pneumonia patterns in x-ray exams. The algorithm takes only a few seconds to run and classify the patient's clinical condition, safely and privately.
         The dataset used in the project was extracted from <a href="https://data.mendeley.com/datasets/rscbjbr9sj/2">this website</a> and consists of historical x-ray images of patients diagnosed with or without pneumonia.
         Among patients who were diagnosed with pneumonia, the predictive model was able to correctly diagnose more than 90% of pneumonia cases (recall).</p></li>
       <br>
-      <li><p>The web application was developed as part of the challenge proposed by Pickcells® for the Data Science + Back-end vacancy.</p></li>
+      <li><p class="text-justify">The web application was developed as part of the challenge proposed by Pickcells® for the Data Science + Back-end vacancy.</p></li>
       </ul>
     </div>
   </div>
 </div>
-
-<!-- <div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>About</h1>
-            <hr>
-
-            <h4>Accessing an object's value.</h4>
-            <hr>
-            <h4>Looping through an iterable</h4>
-            <hr>
-
-            <strong class="d-block mb-3">Programming languages</strong>
-            <ul>
-            {% for lang in langs %}
-            <li>{{ lang }}</li>
-            {% endfor %}
-            </ul>
-
-            <h4>Looping key/value pairs in a dict</h4>
-            <hr>
-
-            <strong class="d-block mb-3">Friends & ages</strong>
-            <ul>
-            {% for name, age in friends.items() %}
-            <li>{{ name }}: {{ age }}</li>
-            {% endfor %}
-            </ul>
-
-            <h4>Calling functions</h4>
-            <hr>
-            
-            <p>{{ repeat("Jinja is great! ", 10) }}</p>
-
-            <h4>List index</h4>
-            <hr>
-            <p>{{ langs[0] }}</p>
-            <hr>
-            
-            <h4>Dictionary value</h4>
-            <hr>
-            <p>{{ friends["Tony"] }}</p>
-            <hr>
-            
-            <h4>Object's attribute</h4>
-            <hr>
-            <p>{{ my_remote.domain }}</p>
-
-            <h4>Class methods</h4>
-            <hr>
-            <p>{{ my_remote.clone() }}</p>
-            
-            <h4>Create a class</h4>
-            <hr>
-            {% set new_repo = GitRemote(
-                name="Learning Flask",
-                description="Start to learn the Flask web framework for Python",
-                domain="https://github.com/Julian-Nash/learning-flask.git") 
-            %}
-            <p>{{ new_repo.description }}</p>
-
-            <h4>Unpack variables</h4>
-            <hr>
-            {% set foo, bar = colors %}
-            <p>{{ foo }}</p>
-            <p>{{ bar }}</p>
-
-            <h4>Conditional if</h4>
-            <hr>
-            {% if cool %}
-                <p>Cool = {{ cool }}</p>
-            {% endif %}
-
-            <h4>Built in filters (length)</h4>
-            <hr>
-            <p>{{ langs|length }}</p>
-
-            <h4>Escaping</h4>
-            <hr>
-            <p>Not safe:</p>
-            {{ my_html }}
-            <p>Marked as safe:</p>
-            {{ my_html|safe }}
-
-
-        </div>
-    </div>
-</div> -->
 
 {% endblock %}

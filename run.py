@@ -24,58 +24,8 @@ def index():
     return render_template('index.html')
 
 @app.route('/about')
-def jinja():
-    # Strings
-    my_name = "Julian"
-
-    # Integers
-    my_age = 30
-
-    # Lists
-    langs = ["Python", "JavaScript", "Bash", "Ruby", "C", "Rust"]
-
-    # Dictionaries
-    friends = {
-        "Tony": 43,
-        "Cody": 28,
-        "Amy": 26,
-        "Clarissa": 23,
-        "Wendell": 39
-    }
-
-    # Tuples
-    colors = ("Red", "Blue")
-
-    # Booleans
-    cool = True
-
-    # Classes
-    class GitRemote:
-        def __init__(self, name, description, domain):
-            self.name = name
-            self.description = description 
-            self.domain = domain
-
-        def clone(self, repo=''):
-            return f"Cloning into {repo}"
-
-    my_html = '<h1>This is some HTML</h1>'
-
-    my_remote = GitRemote(
-        name="Learning Flask",
-        description="Learn the Flask web framework for Python",
-        domain="https://github.com/Julian-Nash/learning-flask.git"
-    )
-
-    # Functions
-    def repeat(x, qty=1):
-        return x * qty
-
-    return render_template(
-        "about.html", my_name=my_name, my_age=my_age, langs=langs,
-        friends=friends, colors=colors, cool=cool, GitRemote=GitRemote, 
-        my_remote=my_remote, repeat=repeat, my_html=my_html
-    )
+def about():
+    return render_template("about.html")
 
 @app.route('/diagnosis', methods = ['POST', 'GET'])
 def upload_image():
