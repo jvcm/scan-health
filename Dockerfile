@@ -1,19 +1,22 @@
 FROM ubuntu:18.04
 
-MAINTANER Your Name "youremail@domain.tld"
+RUN apt-get update
 
-RUN apt-get update -y && \
-    apt-get install -y python-pip python-dev
+RUN apt-get install -y build-essential python3.6 python3.6-dev python3-pip python3.6-venv
+RUN apt-get install -y git
+
+# update pip
+RUN python3.6 -m pip install pip --upgrade
+RUN python3.6 -m pip install wheel
 
 # We copy just the requirements.txt first to leverage Docker cache
-COPY ./requirements.txt /app/requirements.txt
-
+COPY . /app
 WORKDIR /app
-
 RUN pip install -r requirements.txt
 
-COPY . /app
+RUN apt-get install -y libsm6 libxext6 libxrender-dev
+RUN pip install opencv-python
 
-ENTRYPOINT [ "python" ]
+ENTRYPOINT [ "python3" ]
 
 CMD [ "run.py" ]
