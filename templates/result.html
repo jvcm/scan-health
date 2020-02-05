@@ -18,7 +18,7 @@
             <p>Probability of Pneumonia: {{ probability|round(3) }}%</p>
           </div>
           <div class="col-sm my-auto">
-            <img src="/plot.png" style="height:250px; width:auto;" alt="Responsive image">
+            {{ img_code }}
           </div>
         </div>
       </div>
@@ -63,8 +63,9 @@
     </div>
   </div>
   {% endif %}
-  <a class="btn btn-primary" href="/diagnosis" role="button">New Upload</a>
-  <a class="btn btn-primary" href="/" role="button">Return Home</a>
+  <br>
+  <a class="btn btn-primary" style="width:130px" href="/diagnosis" role="button">New Upload</a>
+  <a class="btn btn-primary" style="width:130px" href="/" role="button">Return Home</a>
 </div>
 
 {% endblock %}
