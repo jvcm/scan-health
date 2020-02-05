@@ -1,7 +1,6 @@
 from app import app
 from flask import request, render_template, Markup
 import os
-from utils.functions import allow_image, process_img
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
@@ -28,7 +27,7 @@ def upload_image():
             if allow_image(image.filename, ["JPEG", "JPG", "PNG"]):
 
                 #Load CNN model
-                new_model = keras.models.load_model('./model/model.h5')
+                new_model = keras.models.load_model('app/model.h5')
 
                 #Image preprocessing and classification
                 test_img = process_img(image, 150, 32)
@@ -50,6 +49,34 @@ def upload_image():
                 return render_template("diagnosis.html", feedback=feedback)
                     
     return render_template('diagnosis.html')
+
+def allow_image(filename, imageExtensions):
+    if filename == "":
+        print("No filename")
+        return False
+    elif not "." in filename:
+        print("No . in filename")
+        return False
+    elif not filename.split('.')[-1].upper() in imageExtensions:
+        print("Invalid format")
+        return False
+    else:
+        return True
+
+def process_img(img_path, img_dims, batch_size):
+    test_data = []
+
+    img = plt.imread(img_path)
+    if len(img.shape) > 2:
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    img = cv2.resize(img, (img_dims, img_dims))
+    img = np.dstack([img, img, img])
+    img = img.astype('float32') / 255
+    test_data.append(img)
+        
+    test_data = np.array(test_data)
+    
+    return test_data
 
 def get_encoded_image(c):
 
