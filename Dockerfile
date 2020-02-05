@@ -16,6 +16,6 @@ RUN pip install -r requirements.txt
 
 RUN apt-get install -y libsm6 libxext6 libxrender-dev
 
-ENTRYPOINT [ "python3" ]
+ENTRYPOINT [ "uwsgi" ]
 
-CMD [ "run.py" ]
+CMD [ "dev.ini" ]
