@@ -9,6 +9,7 @@ import io
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import base64
+import gc
 
 @app.route('/')
 def index():
@@ -32,6 +33,11 @@ def upload_image():
                 #Image preprocessing and classification
                 test_img = process_img(image, 150, 32)
                 prediction = new_model.predict(test_img)[0][0]
+
+                # Memory release
+                del new_model
+                gc.collect()
+
                 prob = 100*round(prediction, 3)
                 classes = ['Normal', 'Pneumonia']
                 pred_class = classes[int(round(prediction))]
