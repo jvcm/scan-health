@@ -8,19 +8,18 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import base64
 import tensorflow as tf
-from tensorflow.python.keras.backend import set_session
 from tensorflow.python.keras.models import load_model
+from tensorflow.python.keras.backend import set_session
 
 app = Flask(__name__, template_folder='./app/templates/', static_folder='./app/static/')
 
 def load():
-    global sess
+    global new_model, graph, sess
     sess = tf.Session()
-    global graph
     graph = tf.get_default_graph()
     set_session(sess)
-    global new_model
     new_model = load_model('./app/model.h5')
+    
 
 @app.route('/')
 def index():
@@ -33,13 +32,13 @@ def upload_image():
             image = request.files['imgInp']
 
             if allow_image(image.filename, ["JPEG", "JPG", "PNG"]):
+                global sess
                 global graph
                 global new_model
-                global sess
                 test_img = process_img(image, 150, 32)
                 with graph.as_default():
                     set_session(sess)
-                    prediction = new_model.predict(test_img)[0][0]
+                    prediction = new_model.predict(test_img, verbose = 1)[0][0]
 
                 prob = 100*round(prediction, 3)
                 classes = ['Normal', 'Pneumonia']
@@ -106,6 +105,8 @@ def get_encoded_image(c):
     plot_url = base64.b64encode(img.getvalue()).decode()
     return plot_url
 
+load()
+
 if __name__ == '__main__':
-    load()
-    app.run()
+    #test locally
+    app.run(host='0.0.0.0', threaded= True)
