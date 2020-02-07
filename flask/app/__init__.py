@@ -10,7 +10,7 @@ def load():
     set_session(sess)
     new_model = load_model('app/model.h5')
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="./static/")
 load()
 
 from app import views
