@@ -6,4 +6,8 @@ opencv-python==4.1.2.30
 seaborn==0.10.0
 tensorflow==1.14.0
 Pillow==7.0.0
+<<<<<<< HEAD
 uWSGI==2.0.18
+=======
+uWSGI==2.0.18
+>>>>>>> aca4af162a81431b9d61235f7d47852b43e4321d
