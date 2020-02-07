@@ -11,7 +11,7 @@ import tensorflow as tf
 from tensorflow.python.keras.backend import set_session
 from tensorflow.python.keras.models import load_model
 
-app = Flask(__name__, template_folder='./app/templates/')
+app = Flask(__name__, template_folder='./app/templates/', static_folder='./app/static/')
 
 def load():
     global sess
@@ -33,7 +33,9 @@ def upload_image():
             image = request.files['imgInp']
 
             if allow_image(image.filename, ["JPEG", "JPG", "PNG"]):
-
+                global graph
+                global new_model
+                global sess
                 test_img = process_img(image, 150, 32)
                 with graph.as_default():
                     set_session(sess)
