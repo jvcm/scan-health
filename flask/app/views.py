@@ -10,6 +10,9 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import base64
 import gc
+from app import sess, graph, new_model
+from tensorflow.python.keras.backend import set_session
+
 
 @app.route('/')
 def index():
@@ -27,16 +30,14 @@ def upload_image():
 
             if allow_image(image.filename, ["JPEG", "JPG", "PNG"]):
 
-                #Load CNN model
-                new_model = keras.models.load_model('app/model.h5')
-
                 #Image preprocessing and classification
+                global sess
+                global graph
+                global new_model
                 test_img = process_img(image, 150, 32)
-                prediction = new_model.predict(test_img)[0][0]
-
-                # Memory release
-                del new_model
-                gc.collect()
+                with graph.as_default():
+                    set_session(sess)
+                    prediction = new_model.predict(test_img, verbose = 1)[0][0]
 
                 prob = 100*round(prediction, 3)
                 classes = ['Normal', 'Pneumonia']
@@ -45,6 +46,9 @@ def upload_image():
                 c = [100 - prob, prob]
 
                 imagem = get_encoded_image(c)
+
+                # Memory release
+                gc.collect()
 
                 return render_template('result.html',
                     classification = pred_class, 
