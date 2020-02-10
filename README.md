@@ -8,15 +8,13 @@ The web application was developed as part of the challenge proposed by Pickcells
 
 ## Build
 
-The project was developed in <i>Python3.6</i>. Docker and Docker-compose are necessary for the next steps.
-
-#### Change to main folder:
+The project was developed in <i>Python3.6</i>. Docker and Docker-compose are necessary for the next steps. After cloning the repository to the server, change your working directory to the project's main folder.
 
 ```
   cd scan-health
 ```
 
-#### Build, start and attach containers for the service:
+Build, start and attach containers for the service:
 
 ```
   docker-compose up --build
