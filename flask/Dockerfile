@@ -9,7 +9,5 @@ ADD . /app
 # Install the dependencies
 RUN pip install -r requirements.txt
 
-# RUN apt-get install -y libsm6 libxext6 libxrender-dev
-
 # run the command to start uWSGI
 CMD ["uwsgi", "app.ini"]

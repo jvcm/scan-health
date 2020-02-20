@@ -18,9 +18,9 @@ from tensorflow.python.keras.backend import set_session
 def index():
     return render_template('index.html')
 
-# @app.route('/about')
-# def about():
-#     return render_template("about.html")
+@app.route('/about')
+def about():
+    return render_template("about.html")
 
 @app.route('/diagnosis', methods = ['POST', 'GET'])
 def upload_image():
@@ -30,7 +30,7 @@ def upload_image():
 
             if allow_image(image.filename, ["JPEG", "JPG", "PNG"]):
 
-                #Image preprocessing and classification
+                # Image preprocessing and classification.
                 global sess
                 global graph
                 global new_model
@@ -50,17 +50,23 @@ def upload_image():
                 # Memory release
                 gc.collect()
 
+                # The result.html page will be rendered with 3 objects:
+                #   - The class of uploaded image;
+                #   - Probability of 'pneumonia' class;
+                #   - Generated donut plot containing the class probabilities within the HTML code.
                 return render_template('result.html',
                     classification = pred_class, 
                     probability = prob, 
                     img_code= Markup('<img src=data:image/png;base64,{} style="height:250px; width:auto;" alt="Responsive image">'.format(imagem)))
             else:
+                # In case file is no choosen or file format is invalid.
                 feedback = "File format not allowed."
                 return render_template("diagnosis.html", feedback=feedback)
                     
     return render_template('diagnosis.html')
 
 def allow_image(filename, imageExtensions):
+    # Check if image file is valid before uploading it.
     if filename == "":
         print("No filename")
         return False
@@ -74,6 +80,8 @@ def allow_image(filename, imageExtensions):
         return True
 
 def process_img(img_path, img_dims, batch_size):
+    # This method is responsible for receiving an image of any given size and adapt to the input
+    # of our CNN model. The image is converted to gray scale and resized to 150x150 px.
     test_data = []
 
     img = plt.imread(img_path)
@@ -89,7 +97,8 @@ def process_img(img_path, img_dims, batch_size):
     return test_data
 
 def get_encoded_image(c):
-
+    # This method is responsible for generating an image and not saving as a static file in the server.
+    # Instead, BytesIO can be used like a file opened in binary mode.
     fontsize= 12
     plt.rcParams['font.size'] = fontsize
     cols = ['#66b3ff', '#ff9999']
@@ -99,6 +108,7 @@ def get_encoded_image(c):
     axis.pie(c, autopct='%.1f%%', colors= cols)
     fig.legend(labels=['Normal', 'Pneumonia'])
 
+    # The donut plot is generated with matplotlib and will be rendered within the result.html file.
     circle = plt.Circle(xy=(0, 0), radius=0.7, facecolor='white')
     fig.gca().add_artist(circle)
     img = io.BytesIO()
